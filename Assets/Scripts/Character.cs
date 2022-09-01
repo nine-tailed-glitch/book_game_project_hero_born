@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character  // class -> ссылочные объеты
+public class Character  // class -> link objects
 {
     public string name;
     public int exp = 0;
@@ -44,7 +44,7 @@ public class Paladin : Character
     }
 }
 
-public struct Weapon   // struct -> объекты значений
+public struct Weapon   // struct -> value objects
 {
     public string name;
     public int damage;

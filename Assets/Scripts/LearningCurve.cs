@@ -7,6 +7,6 @@ public class LearningCurve : MonoBehaviour
     private void Start()
     {
         Character hero = new Character("Oliver");
-        hero.PrintStatsInfo();
+        //hero.PrintStatsInfo();
     }
 }
