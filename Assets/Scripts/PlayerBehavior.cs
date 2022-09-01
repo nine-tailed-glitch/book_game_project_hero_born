@@ -20,10 +20,13 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody _rb;
     private CapsuleCollider _col;
 
+    private GameBehavior _gameManager;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameBehavior>();
     }
 
     private void Update()
@@ -68,5 +71,13 @@ public class PlayerBehavior : MonoBehaviour
         bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
 
         return grounded;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            _gameManager.HP -= 1;
+        }
     }
 }
