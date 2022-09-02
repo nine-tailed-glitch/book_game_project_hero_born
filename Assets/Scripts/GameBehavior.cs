@@ -14,6 +14,8 @@ public class GameBehavior : MonoBehaviour, IManager
         set { _state = value; }
     }
 
+    public Stack<string> lootStack = new Stack<string> ();
+
     public string labelText = "Collected all 4 items and win your freedom!";
     public int maxItems = 4;
 
@@ -60,18 +62,44 @@ public class GameBehavior : MonoBehaviour, IManager
         }
     }
 
+    public delegate void DebugDelegate(string nextText);
+    public DebugDelegate debug = Print;
+
     private void Start()
     {
         Initialize();
+
+        InventoryList<string> inventoryList = new InventoryList<string>();
+        inventoryList.SetItem("Potion");
+        Debug.Log(inventoryList.item);
     }
 
     public void Initialize()
     {
         _state = "Manager initialized";
-
         _state.FancyDebug();
+        //Debug.Log(_state);
 
-        Debug.Log(_state);
+        //lootStack.Push("Sword of Doom");
+        //lootStack.Push("HP+");
+        //lootStack.Push("Golden Key");
+        //lootStack.Push("Winged Boot");
+        //lootStack.Push("Mythril Bracers");
+        debug(_state);
+    }
+
+    public static void Print(string nextText)
+    {
+        Debug.Log(nextText);
+    }
+
+    public void PrintLootReport()
+    {
+        var currentItem = lootStack.Pop();
+        var nextItem = lootStack.Peek();
+        Debug.LogFormat("You get a {0}! You've got a good chance of finding a {1} next!", currentItem, nextItem);
+
+        Debug.LogFormat("There are {0} random loot items waiting for you!", lootStack.Count);
     }
 
     private void OnGUI()
